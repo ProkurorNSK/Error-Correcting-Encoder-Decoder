@@ -166,6 +166,19 @@ files:
         }
     }
   learner_created: false
+- name: src/correcter/EncoderDecoder.java
+  visible: true
+  learner_created: true
+- name: src/correcter/BitEncoderDecoder.java
+  visible: true
+  learner_created: true
+- name: received.txt
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/58/stages/314/implement
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/58/stages/314/implement">JetBrains
+    Academy</a>
+  time: Thu, 23 Jul 2020 14:22:18 UTC
 record: -1
