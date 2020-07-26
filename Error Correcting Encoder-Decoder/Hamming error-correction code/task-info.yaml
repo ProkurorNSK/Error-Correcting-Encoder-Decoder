@@ -362,6 +362,19 @@ files:
     }
 
   learner_created: false
+- name: received.txt
+  visible: true
+  learner_created: true
+- name: encoded.txt
+  visible: true
+  learner_created: true
+- name: decoded.txt
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/58/stages/316/implement
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/58/stages/316/implement">JetBrains
+    Academy</a>
+  time: Sun, 26 Jul 2020 09:40:33 UTC
 record: -1

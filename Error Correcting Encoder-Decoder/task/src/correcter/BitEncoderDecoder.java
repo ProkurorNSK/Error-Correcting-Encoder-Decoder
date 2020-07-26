@@ -2,20 +2,9 @@ package correcter;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.BitSet;
-import java.util.Random;
 
 public class BitEncoderDecoder implements EncoderDecoder {
-    private void WriteBytes(byte[] bytes, String path) {
-        try (FileOutputStream fileOutputStream = new FileOutputStream(path)) {
-            fileOutputStream.write(bytes);
-        } catch (IOException ignored) {
-        }
-    }
-
     @NotNull
     @Override
     public byte[] getEncode(@NotNull byte[] bytes) {
@@ -23,13 +12,10 @@ public class BitEncoderDecoder implements EncoderDecoder {
         BitSet bitSet = BitSet.valueOf(bytes);
         BitSet bitResult = new BitSet();
 
-        int indexFirst = 0;
-        int indexSecond = 0;
-        int indexThird = 0;
         for (int i = 0; i <= (bytes.length * 8) / 3; i++) {
-            indexFirst = 7 - (i * 3) % 8 + ((i * 3) / 8) * 8;
-            indexSecond = 7 - (i * 3 + 1) % 8 + ((i * 3 + 1) / 8) * 8;
-            indexThird = 7 - (i * 3 + 2) % 8 + ((i * 3 + 2) / 8) * 8;
+            int indexFirst = 7 - (i * 3) % 8 + ((i * 3) / 8) * 8;
+            int indexSecond = 7 - (i * 3 + 1) % 8 + ((i * 3 + 1) / 8) * 8;
+            int indexThird = 7 - (i * 3 + 2) % 8 + ((i * 3 + 2) / 8) * 8;
             bitResult.set(i * 8 + 7, bitSet.get(indexFirst));
             bitResult.set(i * 8 + 6, bitSet.get(indexFirst));
             bitResult.set(i * 8 + 5, bitSet.get(indexSecond));
@@ -41,23 +27,8 @@ public class BitEncoderDecoder implements EncoderDecoder {
         }
 
         byte[] result = bitResult.toByteArray();
-  /*      if (!(bitSet.get(indexFirst) | bitSet.get(indexSecond) | bitSet.get(indexThird))) {
-            result = Arrays.copyOf(result, result.length + 1);
-        }*/
         WriteBytes(result, "encoded.txt");
         return result;
-    }
-
-    @NotNull
-    @Override
-    public byte[] getErrors(@NotNull byte[] bytes) {
-        Random random = new Random();
-        for (int i = 0; i < bytes.length; i++) {
-            int position = random.nextInt(7);
-            bytes[i] ^= 1 << position;
-        }
-        WriteBytes(bytes, "received.txt");
-        return bytes;
     }
 
     @NotNull

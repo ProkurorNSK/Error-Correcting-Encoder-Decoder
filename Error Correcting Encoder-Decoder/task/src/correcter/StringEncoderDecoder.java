@@ -17,7 +17,7 @@ public class StringEncoderDecoder implements EncoderDecoder {
 
     @Override
     @NotNull
-    public byte[] getErrors(byte[] bytes) {
+    public byte[] getErrors(@NotNull byte[] bytes) {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder(new String(bytes));
         for (int i = 0; i < bytes.length / 3; i++) {

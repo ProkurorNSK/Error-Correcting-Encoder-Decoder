@@ -1,42 +1,24 @@
 package correcter;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        EncoderDecoder encoderDecoder = new BitEncoderDecoder();
-        byte[] bytes;
+        EncoderDecoder encoderDecoder = new HammingEncoderDecoder();
 
         System.out.print("Write a mode: ");
         String variant = scanner.nextLine();
         switch (variant) {
             case "encode":
-                bytes = encoderDecoder.getBytes("send.txt");
-//                print(bytes);
-                byte[] bytesEncode = encoderDecoder.getEncode(bytes);
-//                print(bytesEncode);
+                encoderDecoder.getEncode(encoderDecoder.getBytes("send.txt"));
                 break;
             case "send":
-                bytes = encoderDecoder.getBytes("encoded.txt");
-//                print(bytes);
-                byte[] bytesError = encoderDecoder.getErrors(bytes);
-//                print(bytesError);
+                encoderDecoder.getErrors(encoderDecoder.getBytes("encoded.txt"));
                 break;
             case "decode":
-                bytes = encoderDecoder.getBytes("received.txt");
-//                print(bytes);
-                byte[] bytesDecode = encoderDecoder.getDecode(bytes);
-//                print(bytesDecode);
+                encoderDecoder.getDecode(encoderDecoder.getBytes("received.txt"));
                 break;
         }
-    }
-
-    private static void print(byte[] bytes) {
-        for (byte a: bytes) {
-            System.out.print(Integer.toHexString(a) + " ");
-        }
-        System.out.println();
     }
 }
