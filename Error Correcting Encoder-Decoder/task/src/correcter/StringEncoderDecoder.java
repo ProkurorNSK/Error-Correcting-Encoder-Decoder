@@ -3,50 +3,24 @@ package correcter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
-import java.util.Scanner;
 
 public class StringEncoderDecoder implements EncoderDecoder {
     @Override
     @NotNull
-    public String getText() {
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
-    }
-
-    @Override
-    @NotNull
-    public String getDecode(String stringErrors) {
+    public byte[] getEncode(byte[] bytes) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < stringErrors.length(); i += 3) {
-            char a = stringErrors.charAt(i);
-            char b = stringErrors.charAt(i + 1);
-            char c = stringErrors.charAt(i + 2);
-            if (a == b) {
-                stringBuilder.append(a);
-            } else {
-                stringBuilder.append(c);
-            }
+        for (byte aByte : bytes) {
+            stringBuilder.append(aByte).append(aByte).append(aByte);
         }
-
-        return stringBuilder.toString();
+        return stringBuilder.toString().getBytes();
     }
 
     @Override
     @NotNull
-    public String getEncode(String text) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < text.length(); i++) {
-            stringBuilder.append(text.charAt(i)).append(text.charAt(i)).append(text.charAt(i));
-        }
-        return stringBuilder.toString();
-    }
-
-    @Override
-    @NotNull
-    public String getErrors(String text) {
+    public byte[] getErrors(byte[] bytes) {
         Random random = new Random();
-        StringBuilder stringBuilder = new StringBuilder(text);
-        for (int i = 0; i < text.length() / 3; i++) {
+        StringBuilder stringBuilder = new StringBuilder(new String(bytes));
+        for (int i = 0; i < bytes.length / 3; i++) {
             int index = i * 3 + random.nextInt(3);
             char newCh;
             do {
@@ -63,6 +37,24 @@ public class StringEncoderDecoder implements EncoderDecoder {
             } while (stringBuilder.charAt(index) == newCh);
             stringBuilder.setCharAt(index, newCh);
         }
-        return stringBuilder.toString();
+        return stringBuilder.toString().getBytes();
+    }
+
+    @Override
+    @NotNull
+    public byte[] getDecode(byte[] bytes) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < bytes.length; i += 3) {
+            byte a = bytes[i];
+            byte b = bytes[i + 1];
+            byte c = bytes[i + 2];
+            if (a == b) {
+                stringBuilder.append(a);
+            } else {
+                stringBuilder.append(c);
+            }
+        }
+
+        return stringBuilder.toString().getBytes();
     }
 }

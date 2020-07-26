@@ -2,16 +2,26 @@ package correcter;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+
 public interface EncoderDecoder {
-    @NotNull
-    String getText();
 
     @NotNull
-    String getDecode(String stringErrors);
+    default byte[] getBytes(String path) {
+        try (FileInputStream fileInputStream = new FileInputStream(path)) {
+            return fileInputStream.readAllBytes();
+        } catch (IOException ignored) {
+            return new byte[0];
+        }
+    }
 
     @NotNull
-    String getEncode(String text);
+    byte[] getEncode(byte[] bytes);
 
     @NotNull
-    String getErrors(String text);
+    byte[] getErrors(byte[] bytes);
+
+    @NotNull
+    byte[] getDecode(byte[] bytes);
 }
